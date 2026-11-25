@@ -1,0 +1,47 @@
+track_parcel:
+  fields:
+    tracking_code:
+      required: true
+      example: "158278800000000000000000"
+      selector:
+        text:
+    country:
+      required: false
+      example: "HR"
+      selector:
+        select:
+          options:
+            - "HR"
+            - "BG"
+          translation_key: country
+    contents:
+      required: false
+      example: "Running shoes"
+      selector:
+        text:
+
+untrack_parcel:
+  fields:
+    tracking_code:
+      required: true
+      example: "158278800000000000000000"
+      selector:
+        text:
+
+update_contents:
+  fields:
+    tracking_code:
+      required: true
+      example: "158278800000000000000000"
+      selector:
+        text:
+    contents:
+      required: false
+      example: "Running shoes"
+      selector:
+        text:
+    config_entry_id:
+      required: false
+      selector:
+        config_entry:
+          integration: express_one

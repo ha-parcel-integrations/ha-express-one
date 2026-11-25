@@ -1,0 +1,197 @@
+{
+  "title": "Express One",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Postavljanje usluge Express One",
+        "description": "Odaberite državu čiji tracker traži pakete. Pakete dodajte poslije putem opcija integracije ili usluge `express_one.track_parcel`.",
+        "data": {
+          "country": "Država"
+        },
+        "data_description": {
+          "country": "Podržane su Hrvatska i Bugarska. Za Sloveniju još tražimo stvarni paket za testiranje."
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Express One već je postavljen za ovu državu.",
+      "slovenia_unsupported": "Express One Slovenija još nije podržan: tražimo stvarni slovenski paket kako bismo saznali koji tracker koristi. Podijelite ga u povezanoj prijavi: {issue_url}"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opcije usluge Express One",
+        "menu_options": {
+          "parcels": "Paketi",
+          "settings": "Postavke"
+        },
+        "sections": {
+          "parcels": {
+            "name": "Paketi",
+            "data": {
+              "add": "Dodaj paket",
+              "remove": "Ukloni pakete"
+            },
+            "data_description": {
+              "add": "Unesite Express One broj za praćenje kako biste ga počeli pratiti."
+            }
+          },
+          "delivered": {
+            "name": "Dostavljeni paketi",
+            "data": {
+              "delivered_filter_type": "Filtriraj prema",
+              "delivered_filter_amount": "Količina"
+            },
+            "data_description": {
+              "delivered_filter_type": "Prikaži dostavljene pakete iz posljednjih X dana ili ograniči na X najnovijih.",
+              "delivered_filter_amount": "Broj dana ili paketa za prikaz."
+            }
+          },
+          "history": {
+            "name": "Povijest paketa",
+            "data": {
+              "include_history": "Uključi povijest statusa"
+            },
+            "data_description": {
+              "include_history": "Dodaje atribut povijesti za svaki paket sa svakim ažuriranjem statusa (vrijeme, status, izvorni tekst). Prema zadanim postavkama isključeno."
+            }
+          }
+        }
+      },
+      "parcels": {
+        "title": "Upravljanje paketima",
+        "data": {
+          "tracking_codes": "Brojevi za praćenje"
+        }
+      },
+      "settings": {
+        "title": "Postavke",
+        "data": {
+          "delivered_filter_type": "Dostavljeni paketi: filtriraj prema",
+          "delivered_filter_amount": "Dostavljeni paketi: količina",
+          "include_history": "Uključi povijest statusa"
+        }
+      }
+    },
+    "error": {
+      "invalid_tracking_code": "To ne izgleda kao Express One broj za praćenje.",
+      "already_tracked": "Taj se paket već prati."
+    }
+  },
+  "selector": {
+    "delivered_filter_type": {
+      "options": {
+        "days": "Dani",
+        "parcels": "Broj paketa"
+      }
+    },
+    "country": {
+      "options": {
+        "HR": "Hrvatska",
+        "BG": "Bugarska",
+        "SI": "Slovenija (još nije podržana)"
+      }
+    }
+  },
+  "services": {
+    "track_parcel": {
+      "name": "Prati paket",
+      "description": "Počnite pratiti paket prema Express One broju za praćenje.",
+      "fields": {
+        "tracking_code": {
+          "name": "Broj za praćenje",
+          "description": "Express One broj za praćenje."
+        },
+        "contents": {
+          "name": "Sadržaj",
+          "description": "Što je u paketu, vlastitim riječima. Ponovni poziv za praćeni paket zamjenjuje sadržaj; prazan tekst ga briše."
+        },
+        "country": {
+          "name": "Država",
+          "description": "Država Express One unosa. Potrebno samo kada su postavljene i Hrvatska i Bugarska."
+        }
+      }
+    },
+    "untrack_parcel": {
+      "name": "Prestani pratiti paket",
+      "description": "Prestanite pratiti paket prema Express One broju za praćenje.",
+      "fields": {
+        "tracking_code": {
+          "name": "Broj za praćenje",
+          "description": "Express One broj za praćenje koji se više ne prati."
+        }
+      }
+    },
+    "update_contents": {
+      "name": "Ažuriraj sadržaj paketa",
+      "description": "Vlastitim riječima postavite što je u paketu s ovim kodom za praćenje. Prazan tekst briše sadržaj.",
+      "fields": {
+        "tracking_code": {
+          "name": "Broj za praćenje",
+          "description": "Express One broj za praćenje."
+        },
+        "contents": {
+          "name": "Sadržaj",
+          "description": "Što je u paketu, vlastitim riječima. Prazan tekst ga briše."
+        },
+        "config_entry_id": {
+          "name": "Račun",
+          "description": "Račun za koji se vrijednost sprema. Potreban kada nijedan račun još ne poznaje kod."
+        }
+      }
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "parcel_registered": "Paket je registriran",
+      "parcel_status_changed": "Status paketa se promijenio",
+      "parcel_delivered": "Paket je dostavljen",
+      "parcel_delivery_time_changed": "Očekivano vrijeme dostave paketa se promijenilo"
+    }
+  },
+  "entity": {
+    "button": {
+      "refresh": {
+        "name": "Osvježi"
+      }
+    },
+    "calendar": {
+      "deliveries": {
+        "name": "Dostave"
+      }
+    },
+    "sensor": {
+      "incoming_parcels": {
+        "name": "Dolazni paketi",
+        "unit_of_measurement": "paketi"
+      },
+      "next_delivery": {
+        "name": "Sljedeća dostava"
+      },
+      "en_route_to_pickup_point": {
+        "name": "Na putu do mjesta preuzimanja",
+        "unit_of_measurement": "paketi"
+      },
+      "awaiting_pickup": {
+        "name": "Spremno za preuzimanje",
+        "unit_of_measurement": "paketi"
+      },
+      "delivered_parcels": {
+        "name": "Dostavljeni paketi",
+        "unit_of_measurement": "paketi"
+      },
+      "last_update": {
+        "name": "Zadnje uspješno ažuriranje"
+      },
+      "parcel": {
+        "name": "Paket {barcode}"
+      }
+    }
+  },
+  "exceptions": {
+    "update_contents_entry_required": {
+      "message": "Nijedan račun ne poznaje ovaj kod. Odaberite račun za koji ga želite spremiti."
+    }
+  }
+}

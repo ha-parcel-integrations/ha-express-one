@@ -1,0 +1,18 @@
+{
+  "domain": "express_one",
+  "name": "Express One",
+  "categories": [
+    "productivity_information"
+  ],
+  "codeowners": [
+    "@peter-mdf"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/ha-parcel-integrations/ha-express-one",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/ha-parcel-integrations/ha-express-one/issues",
+  "quality_scale": "silver",
+  "requirements": [],
+  "version": "0.9.0"
+}

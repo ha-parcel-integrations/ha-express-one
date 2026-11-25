@@ -1,0 +1,197 @@
+{
+  "title": "Express One",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Express One",
+        "description": "Choose the country whose tracker looks the parcels up. Add parcels afterwards via the integration options or the `express_one.track_parcel` service.",
+        "data": {
+          "country": "Country"
+        },
+        "data_description": {
+          "country": "Croatia and Bulgaria are supported. For Slovenia we are still looking for a real parcel to test with."
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Express One is already set up for this country.",
+      "slovenia_unsupported": "Express One Slovenia is not supported yet: we are looking for a real Slovenian parcel to find out which tracker it uses. Please share one in the linked issue: {issue_url}"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Express One options",
+        "menu_options": {
+          "parcels": "Parcels",
+          "settings": "Settings"
+        },
+        "sections": {
+          "parcels": {
+            "name": "Parcels",
+            "data": {
+              "add": "Add a parcel",
+              "remove": "Remove parcels"
+            },
+            "data_description": {
+              "add": "Enter an Express One tracking number to start tracking it."
+            }
+          },
+          "delivered": {
+            "name": "Delivered parcels",
+            "data": {
+              "delivered_filter_type": "Filter by",
+              "delivered_filter_amount": "Amount"
+            },
+            "data_description": {
+              "delivered_filter_type": "Show delivered parcels from the last X days, or limit to the X most recent.",
+              "delivered_filter_amount": "Number of days or parcels to show."
+            }
+          },
+          "history": {
+            "name": "Parcel history",
+            "data": {
+              "include_history": "Include status history"
+            },
+            "data_description": {
+              "include_history": "Add a per-parcel history attribute listing each status update (timestamp, status, original text). Off by default."
+            }
+          }
+        }
+      },
+      "parcels": {
+        "title": "Manage parcels",
+        "data": {
+          "tracking_codes": "Tracking codes"
+        }
+      },
+      "settings": {
+        "title": "Settings",
+        "data": {
+          "delivered_filter_type": "Delivered parcels: filter by",
+          "delivered_filter_amount": "Delivered parcels: amount",
+          "include_history": "Include status history"
+        }
+      }
+    },
+    "error": {
+      "invalid_tracking_code": "That does not look like an Express One tracking code.",
+      "already_tracked": "That parcel is already being tracked."
+    }
+  },
+  "selector": {
+    "delivered_filter_type": {
+      "options": {
+        "days": "Days",
+        "parcels": "Number of parcels"
+      }
+    },
+    "country": {
+      "options": {
+        "HR": "Croatia",
+        "BG": "Bulgaria",
+        "SI": "Slovenia (not supported yet)"
+      }
+    }
+  },
+  "services": {
+    "track_parcel": {
+      "name": "Track parcel",
+      "description": "Start tracking a parcel by its Express One tracking code.",
+      "fields": {
+        "tracking_code": {
+          "name": "Tracking code",
+          "description": "The Express One tracking code."
+        },
+        "contents": {
+          "name": "Contents",
+          "description": "What is in the parcel, in your own words. Calling this again for a tracked parcel replaces it; an empty text clears it."
+        },
+        "country": {
+          "name": "Country",
+          "description": "The country of the Express One entry. Only needed when both Croatia and Bulgaria are set up."
+        }
+      }
+    },
+    "untrack_parcel": {
+      "name": "Untrack parcel",
+      "description": "Stop tracking a parcel by its Express One tracking code.",
+      "fields": {
+        "tracking_code": {
+          "name": "Tracking code",
+          "description": "The Express One tracking code to stop tracking."
+        }
+      }
+    },
+    "update_contents": {
+      "name": "Update parcel contents",
+      "description": "Set what is in a parcel, in your own words, for a tracking code. An empty text clears it.",
+      "fields": {
+        "tracking_code": {
+          "name": "Tracking code",
+          "description": "The Express One tracking code."
+        },
+        "contents": {
+          "name": "Contents",
+          "description": "What is in the parcel, in your own words. An empty text clears it."
+        },
+        "config_entry_id": {
+          "name": "Account",
+          "description": "The account to store this for. Needed when no account lists the code yet."
+        }
+      }
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "parcel_registered": "A parcel was registered",
+      "parcel_status_changed": "A parcel's status changed",
+      "parcel_delivered": "A parcel was delivered",
+      "parcel_delivery_time_changed": "A parcel's expected delivery time changed"
+    }
+  },
+  "entity": {
+    "button": {
+      "refresh": {
+        "name": "Refresh"
+      }
+    },
+    "calendar": {
+      "deliveries": {
+        "name": "Deliveries"
+      }
+    },
+    "sensor": {
+      "incoming_parcels": {
+        "name": "Incoming parcels",
+        "unit_of_measurement": "parcels"
+      },
+      "next_delivery": {
+        "name": "Next delivery"
+      },
+      "en_route_to_pickup_point": {
+        "name": "En route to pickup point",
+        "unit_of_measurement": "parcels"
+      },
+      "awaiting_pickup": {
+        "name": "Awaiting pickup",
+        "unit_of_measurement": "parcels"
+      },
+      "delivered_parcels": {
+        "name": "Delivered parcels",
+        "unit_of_measurement": "parcels"
+      },
+      "last_update": {
+        "name": "Last successful update"
+      },
+      "parcel": {
+        "name": "Parcel {barcode}"
+      }
+    }
+  },
+  "exceptions": {
+    "update_contents_entry_required": {
+      "message": "No account lists this code. Choose the account to store it for."
+    }
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "title": "Express One",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Nastavitev Express One",
+        "description": "Izberite državo, katere sledilnik išče pošiljke. Pošiljke dodate pozneje v možnostih integracije ali s storitvijo `express_one.track_parcel`.",
+        "data": {
+          "country": "Država"
+        },
+        "data_description": {
+          "country": "Podprti sta Hrvaška in Bolgarija. Za Slovenijo še iščemo pravi paket za preizkus."
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Express One je za to državo že nastavljen.",
+      "slovenia_unsupported": "Express One Slovenija še ni podprt: iščemo pravi slovenski paket, da ugotovimo, kateri sledilnik uporablja. Delite ga v povezani prijavi: {issue_url}"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Možnosti Express One",
+        "menu_options": {
+          "parcels": "Paketi",
+          "settings": "Nastavitve"
+        },
+        "sections": {
+          "parcels": {
+            "name": "Paketi",
+            "data": {
+              "add": "Dodaj paket",
+              "remove": "Odstrani pakete"
+            },
+            "data_description": {
+              "add": "Vnesite sledilno kodo Express One, da začnete slediti."
+            }
+          },
+          "delivered": {
+            "name": "Dostavljeni paketi",
+            "data": {
+              "delivered_filter_type": "Filtriraj po",
+              "delivered_filter_amount": "Količina"
+            },
+            "data_description": {
+              "delivered_filter_type": "Prikaži dostavljene pakete zadnjih X dni ali omeji na X najnovejših.",
+              "delivered_filter_amount": "Število dni ali paketov za prikaz."
+            }
+          },
+          "history": {
+            "name": "Zgodovina paketov",
+            "data": {
+              "include_history": "Vključi zgodovino statusov"
+            },
+            "data_description": {
+              "include_history": "Doda atribut zgodovine za posamezen paket s seznamom vsake spremembe statusa (časovni žig, status, izvirno besedilo). Privzeto izklopljeno."
+            }
+          }
+        }
+      },
+      "parcels": {
+        "title": "Upravljanje paketov",
+        "data": {
+          "tracking_codes": "Sledilne kode"
+        }
+      },
+      "settings": {
+        "title": "Nastavitve",
+        "data": {
+          "delivered_filter_type": "Dostavljeni paketi: filtriraj po",
+          "delivered_filter_amount": "Dostavljeni paketi: količina",
+          "include_history": "Vključi zgodovino statusov"
+        }
+      }
+    },
+    "error": {
+      "invalid_tracking_code": "To ni videti kot sledilna koda Express One.",
+      "already_tracked": "Temu paketu se že sledi."
+    }
+  },
+  "selector": {
+    "delivered_filter_type": {
+      "options": {
+        "days": "Dnevi",
+        "parcels": "Število paketov"
+      }
+    },
+    "country": {
+      "options": {
+        "HR": "Hrvaška",
+        "BG": "Bolgarija",
+        "SI": "Slovenija (še ni podprta)"
+      }
+    }
+  },
+  "services": {
+    "track_parcel": {
+      "name": "Sledi paketu",
+      "description": "Začne slediti paketu po sledilni kodi Express One.",
+      "fields": {
+        "tracking_code": {
+          "name": "Sledilna koda",
+          "description": "Sledilna koda Express One."
+        },
+        "contents": {
+          "name": "Vsebina",
+          "description": "Kaj je v paketu, z lastnimi besedami. Ponoven klic za spremljan paket vsebino zamenja; prazno besedilo jo izbriše."
+        },
+        "country": {
+          "name": "Država",
+          "description": "Država vnosa Express One. Potrebno le, kadar sta nastavljeni tako Hrvaška kot Bolgarija."
+        }
+      }
+    },
+    "untrack_parcel": {
+      "name": "Prenehaj slediti paketu",
+      "description": "Preneha slediti paketu po sledilni kodi Express One.",
+      "fields": {
+        "tracking_code": {
+          "name": "Sledilna koda",
+          "description": "Sledilna koda Express One, ki ji naj se preneha slediti."
+        }
+      }
+    },
+    "update_contents": {
+      "name": "Posodobi vsebino paketa",
+      "description": "Z lastnimi besedami nastavite, kaj je v paketu s to sledilno kodo. Prazno besedilo vsebino izbriše.",
+      "fields": {
+        "tracking_code": {
+          "name": "Sledilna koda",
+          "description": "Sledilna koda Express One."
+        },
+        "contents": {
+          "name": "Vsebina",
+          "description": "Kaj je v paketu, z lastnimi besedami. Prazno besedilo jo izbriše."
+        },
+        "config_entry_id": {
+          "name": "Račun",
+          "description": "Račun, za katerega se vrednost shrani. Potreben, ko kode še ne pozna noben račun."
+        }
+      }
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "parcel_registered": "Paket je bil registriran",
+      "parcel_status_changed": "Status paketa se je spremenil",
+      "parcel_delivered": "Paket je bil dostavljen",
+      "parcel_delivery_time_changed": "Pričakovani čas dostave paketa se je spremenil"
+    }
+  },
+  "entity": {
+    "button": {
+      "refresh": {
+        "name": "Osveži"
+      }
+    },
+    "calendar": {
+      "deliveries": {
+        "name": "Dostave"
+      }
+    },
+    "sensor": {
+      "incoming_parcels": {
+        "name": "Prihajajoči paketi",
+        "unit_of_measurement": "paketi"
+      },
+      "next_delivery": {
+        "name": "Naslednja dostava"
+      },
+      "en_route_to_pickup_point": {
+        "name": "Na poti do prevzemnega mesta",
+        "unit_of_measurement": "paketi"
+      },
+      "awaiting_pickup": {
+        "name": "Pripravljeno za prevzem",
+        "unit_of_measurement": "paketi"
+      },
+      "delivered_parcels": {
+        "name": "Dostavljeni paketi",
+        "unit_of_measurement": "paketi"
+      },
+      "last_update": {
+        "name": "Zadnja uspešna posodobitev"
+      },
+      "parcel": {
+        "name": "Paket {barcode}"
+      }
+    }
+  },
+  "exceptions": {
+    "update_contents_entry_required": {
+      "message": "Nobeden račun ne pozna te kode. Izberite račun, za katerega jo shranite."
+    }
+  }
+}

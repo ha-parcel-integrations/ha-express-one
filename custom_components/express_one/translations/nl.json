@@ -1,0 +1,197 @@
+{
+  "title": "Express One",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Express One instellen",
+        "description": "Kies het land waarvan de tracker de pakketten opzoekt. Pakketten voeg je daarna toe via de integratie-opties of de service `express_one.track_parcel`.",
+        "data": {
+          "country": "Land"
+        },
+        "data_description": {
+          "country": "Kroatië en Bulgarije worden ondersteund. Voor Slovenië zoeken we nog een echt pakket om mee te testen."
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Express One is voor dit land al ingesteld.",
+      "slovenia_unsupported": "Express One Slovenië wordt nog niet ondersteund: we zoeken een echt Sloveens pakket om de tracker te bepalen. Deel er een in het gekoppelde issue: {issue_url}"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Express One-opties",
+        "menu_options": {
+          "parcels": "Pakketten",
+          "settings": "Instellingen"
+        },
+        "sections": {
+          "parcels": {
+            "name": "Pakketten",
+            "data": {
+              "add": "Pakket toevoegen",
+              "remove": "Pakketten verwijderen"
+            },
+            "data_description": {
+              "add": "Voer een Express One-trackingnummer in om het te volgen."
+            }
+          },
+          "delivered": {
+            "name": "Bezorgde pakketten",
+            "data": {
+              "delivered_filter_type": "Filteren op",
+              "delivered_filter_amount": "Aantal"
+            },
+            "data_description": {
+              "delivered_filter_type": "Toon bezorgde pakketten van de laatste X dagen, of beperk tot de X meest recente.",
+              "delivered_filter_amount": "Aantal dagen of pakketten om te tonen."
+            }
+          },
+          "history": {
+            "name": "Pakketgeschiedenis",
+            "data": {
+              "include_history": "Statusgeschiedenis toevoegen"
+            },
+            "data_description": {
+              "include_history": "Voegt per pakket een geschiedenisattribuut toe met elke statusupdate (tijdstip, status, oorspronkelijke tekst). Standaard uit."
+            }
+          }
+        }
+      },
+      "parcels": {
+        "title": "Pakketten beheren",
+        "data": {
+          "tracking_codes": "Trackingcodes"
+        }
+      },
+      "settings": {
+        "title": "Instellingen",
+        "data": {
+          "delivered_filter_type": "Bezorgde pakketten: filteren op",
+          "delivered_filter_amount": "Bezorgde pakketten: aantal",
+          "include_history": "Statusgeschiedenis toevoegen"
+        }
+      }
+    },
+    "error": {
+      "invalid_tracking_code": "Dit lijkt geen Express One-trackingcode.",
+      "already_tracked": "Dit pakket wordt al gevolgd."
+    }
+  },
+  "selector": {
+    "delivered_filter_type": {
+      "options": {
+        "days": "Dagen",
+        "parcels": "Aantal pakketten"
+      }
+    },
+    "country": {
+      "options": {
+        "HR": "Kroatië",
+        "BG": "Bulgarije",
+        "SI": "Slovenië (nog niet ondersteund)"
+      }
+    }
+  },
+  "services": {
+    "track_parcel": {
+      "name": "Pakket volgen",
+      "description": "Begin met het volgen van een Express One-pakket via de trackingcode.",
+      "fields": {
+        "tracking_code": {
+          "name": "Trackingcode",
+          "description": "De Express One-trackingcode."
+        },
+        "contents": {
+          "name": "Inhoud",
+          "description": "Wat er in het pakket zit, in je eigen woorden. Opnieuw aanroepen voor een gevolgd pakket vervangt de inhoud; een lege tekst wist deze."
+        },
+        "country": {
+          "name": "Land",
+          "description": "Het land van het Express One-item. Alleen nodig als zowel Kroatië als Bulgarije is ingesteld."
+        }
+      }
+    },
+    "untrack_parcel": {
+      "name": "Pakket niet meer volgen",
+      "description": "Stop met het volgen van een Express One-pakket via de trackingcode.",
+      "fields": {
+        "tracking_code": {
+          "name": "Trackingcode",
+          "description": "De Express One-trackingcode om niet meer te volgen."
+        }
+      }
+    },
+    "update_contents": {
+      "name": "Pakketinhoud bijwerken",
+      "description": "Stel in wat er in een pakket zit, in je eigen woorden, voor een trackingcode. Een lege tekst wist de inhoud.",
+      "fields": {
+        "tracking_code": {
+          "name": "Trackingcode",
+          "description": "De Express One-trackingcode."
+        },
+        "contents": {
+          "name": "Inhoud",
+          "description": "Wat er in het pakket zit, in je eigen woorden. Een lege tekst wist de inhoud."
+        },
+        "config_entry_id": {
+          "name": "Account",
+          "description": "Het account waarvoor dit wordt opgeslagen. Nodig als geen account de code al kent."
+        }
+      }
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "parcel_registered": "Een pakket is geregistreerd",
+      "parcel_status_changed": "De status van een pakket is gewijzigd",
+      "parcel_delivered": "Een pakket is bezorgd",
+      "parcel_delivery_time_changed": "De verwachte bezorgtijd van een pakket is gewijzigd"
+    }
+  },
+  "entity": {
+    "button": {
+      "refresh": {
+        "name": "Verversen"
+      }
+    },
+    "calendar": {
+      "deliveries": {
+        "name": "Bezorgingen"
+      }
+    },
+    "sensor": {
+      "incoming_parcels": {
+        "name": "Inkomende pakketten",
+        "unit_of_measurement": "pakketten"
+      },
+      "next_delivery": {
+        "name": "Volgende bezorging"
+      },
+      "en_route_to_pickup_point": {
+        "name": "Onderweg naar afhaalpunt",
+        "unit_of_measurement": "pakketten"
+      },
+      "awaiting_pickup": {
+        "name": "Klaar voor afhalen",
+        "unit_of_measurement": "pakketten"
+      },
+      "delivered_parcels": {
+        "name": "Bezorgde pakketten",
+        "unit_of_measurement": "pakketten"
+      },
+      "last_update": {
+        "name": "Laatste succesvolle update"
+      },
+      "parcel": {
+        "name": "Pakket {barcode}"
+      }
+    }
+  },
+  "exceptions": {
+    "update_contents_entry_required": {
+      "message": "Geen enkel account kent deze code. Kies het account waarvoor je dit wilt opslaan."
+    }
+  }
+}
