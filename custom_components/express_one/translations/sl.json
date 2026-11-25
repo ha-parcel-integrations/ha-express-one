@@ -88,9 +88,9 @@
     },
     "country": {
       "options": {
-        "HR": "Hrvaška",
-        "BG": "Bolgarija",
-        "SI": "Slovenija (še ni podprta)"
+        "hr": "Hrvaška",
+        "bg": "Bolgarija",
+        "si": "Slovenija (še ni podprta)"
       }
     }
   },

@@ -88,9 +88,9 @@
     },
     "country": {
       "options": {
-        "HR": "Kroatië",
-        "BG": "Bulgarije",
-        "SI": "Slovenië (nog niet ondersteund)"
+        "hr": "Kroatië",
+        "bg": "Bulgarije",
+        "si": "Slovenië (nog niet ondersteund)"
       }
     }
   },

@@ -49,11 +49,11 @@ async def test_user_flow_creates_an_entry_per_country(hass):
     )
     assert result["type"] == "form"
     options = result["data_schema"].schema[CONF_COUNTRY].config["options"]
-    assert options == ["BG", "HR", "SI"]
+    assert options == ["bg", "hr", "si"]
     assert result["data_schema"].schema[CONF_COUNTRY].config["sort"] is True
 
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_COUNTRY: "HR"}
+        result["flow_id"], {CONF_COUNTRY: "hr"}
     )
     assert result["type"] == "create_entry"
     assert result["title"] == "Express One Croatia"
@@ -64,7 +64,7 @@ async def test_user_flow_creates_an_entry_per_country(hass):
         DOMAIN, context={"source": "user"}
     )
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_COUNTRY: "BG"}
+        result["flow_id"], {CONF_COUNTRY: "bg"}
     )
     assert result["type"] == "create_entry"
     assert result["title"] == "Express One Bulgaria"
@@ -72,13 +72,13 @@ async def test_user_flow_creates_an_entry_per_country(hass):
 
 async def test_same_country_twice_is_rejected(hass):
     MockConfigEntry(
-        domain=DOMAIN, unique_id=f"{DOMAIN}_HR", data={CONF_COUNTRY: "HR"}
+        domain=DOMAIN, unique_id=f"{DOMAIN}_HR", data={CONF_COUNTRY: "hr"}
     ).add_to_hass(hass)
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
     )
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_COUNTRY: "HR"}
+        result["flow_id"], {CONF_COUNTRY: "hr"}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
@@ -89,7 +89,7 @@ async def test_slovenia_aborts_with_the_issue_link(hass):
         DOMAIN, context={"source": "user"}
     )
     result = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_COUNTRY: "SI"}
+        result["flow_id"], {CONF_COUNTRY: "si"}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "slovenia_unsupported"
@@ -104,7 +104,7 @@ def test_slovenia_abort_text_carries_the_issue_placeholder(path):
     root = Path(custom_components.express_one.__file__).parent
     texts = json.loads((root / path).read_text(encoding="utf-8"))
     assert "{issue_url}" in texts["config"]["abort"]["slovenia_unsupported"]
-    assert set(texts["selector"]["country"]["options"]) == {"HR", "BG", "SI"}
+    assert set(texts["selector"]["country"]["options"]) == {"hr", "bg", "si"}
 
 
 def test_the_issue_link_points_at_this_repo():

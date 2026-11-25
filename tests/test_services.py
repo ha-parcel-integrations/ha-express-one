@@ -89,7 +89,7 @@ async def test_two_entries_need_a_country_to_choose(hass):
         )
 
     await _call(
-        hass, "track_parcel", {CONF_TRACKING_CODE: ACTIVE_CODE, CONF_COUNTRY: "HR"}
+        hass, "track_parcel", {CONF_TRACKING_CODE: ACTIVE_CODE, CONF_COUNTRY: "hr"}
     )
     assert croatia.options[CONF_PARCELS] == [{CONF_TRACKING_CODE: ACTIVE_CODE}]
     assert bulgaria.options[CONF_PARCELS] == []

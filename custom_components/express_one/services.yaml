@@ -7,12 +7,12 @@ track_parcel:
         text:
     country:
       required: false
-      example: "HR"
+      example: "hr"
       selector:
         select:
           options:
-            - "HR"
-            - "BG"
+            - "hr"
+            - "bg"
           translation_key: country
     contents:
       required: false

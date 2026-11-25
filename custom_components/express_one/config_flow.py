@@ -88,7 +88,9 @@ class ExpressOneConfigFlow(ConfigFlow, domain=DOMAIN):
         its tracker is not known yet.
         """
         if user_input is not None:
-            country = user_input[CONF_COUNTRY]
+            # Selector values are lower-case translation keys (hassfest);
+            # the entry stores the upper-case country code.
+            country = user_input[CONF_COUNTRY].upper()
             if country == COUNTRY_SLOVENIA:
                 return self.async_abort(
                     reason="slovenia_unsupported",
@@ -108,13 +110,13 @@ class ExpressOneConfigFlow(ConfigFlow, domain=DOMAIN):
             )
         schema = vol.Schema(
             {
-                vol.Required(CONF_COUNTRY, default=COUNTRY_CROATIA): (
+                vol.Required(CONF_COUNTRY, default=COUNTRY_CROATIA.lower()): (
                     selector.SelectSelector(
                         selector.SelectSelectorConfig(
                             options=[
-                                COUNTRY_BULGARIA,
-                                COUNTRY_CROATIA,
-                                COUNTRY_SLOVENIA,
+                                COUNTRY_BULGARIA.lower(),
+                                COUNTRY_CROATIA.lower(),
+                                COUNTRY_SLOVENIA.lower(),
                             ],
                             translation_key=CONF_COUNTRY,
                             mode=selector.SelectSelectorMode.DROPDOWN,

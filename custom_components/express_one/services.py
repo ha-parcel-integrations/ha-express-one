@@ -38,7 +38,11 @@ _TRACK_SCHEMA = vol.Schema(
     }
 )
 _TRACK_SCHEMA = _TRACK_SCHEMA.extend(
-    {vol.Optional(CONF_COUNTRY): vol.In([COUNTRY_CROATIA, COUNTRY_BULGARIA])}
+    {
+        vol.Optional(CONF_COUNTRY): vol.All(
+            cv.string, vol.Upper, vol.In([COUNTRY_CROATIA, COUNTRY_BULGARIA])
+        )
+    }
 )
 _UNTRACK_SCHEMA = vol.Schema({vol.Required(CONF_TRACKING_CODE): cv.string})
 _UPDATE_CONTENTS_SCHEMA = vol.Schema(
