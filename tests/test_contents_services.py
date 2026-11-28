@@ -448,3 +448,27 @@ async def test_a_contents_change_alone_fires_no_event(hass):
     )
 
     assert events == []
+
+
+async def test_contents_survive_reapply_and_poll_for_a_parcel_without_a_barcode(hass):
+    entry = _config_entry([{CONF_TRACKING_CODE: ACTIVE_CODE}])
+    entry.add_to_hass(hass)
+    nobarcode = active_sample()
+    nobarcode["barcode"] = None
+    with patch(f"{CLIENT}.async_get_parcel", new=AsyncMock(return_value=nobarcode)):
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+        coordinator = entry.runtime_data.coordinator
+        assert not coordinator.data[0]["barcode"]
+
+        await hass.services.async_call(
+            DOMAIN,
+            "update_contents",
+            {CONF_TRACKING_CODE: ACTIVE_CODE, "contents": "Running shoes"},
+            blocking=True,
+        )
+        assert coordinator.data[0]["contents"] == "Running shoes"
+        coordinator.async_reapply_contents()
+        assert coordinator.data[0]["contents"] == "Running shoes"
+        await coordinator.async_refresh()
+        assert coordinator.data[0]["contents"] == "Running shoes"

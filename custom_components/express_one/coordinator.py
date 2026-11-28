@@ -153,9 +153,10 @@ class ExpressOneCoordinator(DataUpdateCoordinator[list[dict]]):
         self._client = client
         self.contents_store = ContentsStore(hass, entry.entry_id)
         self.delivered: list[dict] = []
-        # Barcode -> the code the parcel was requested with: the contents store
-        # is keyed on the latter, and a response may carry another number.
-        self._requested_codes: dict[str, str] = {}
+        # id(published parcel) -> the code it was requested with: the contents
+        # store is keyed on the latter, and a response may carry another number
+        # or none at all.
+        self._parcel_codes: dict[int, str] = {}
         # tracking_code -> last successful raw payload, so a transient fetch
         # failure or a not-found blip keeps the parcel visible instead of
         # dropping its sensor. Lives for the integration's lifetime (resets on
@@ -202,9 +203,9 @@ class ExpressOneCoordinator(DataUpdateCoordinator[list[dict]]):
     def async_reapply_contents(self) -> None:
         """Re-read the contents store into the published parcels, without a poll."""
         for parcel in [*(self.data or []), *self.delivered]:
-            barcode = parcel.get("barcode") or ""
+            code = self._parcel_codes.get(id(parcel), parcel.get("barcode") or "")
             parcel["contents"] = None
-            self._apply_contents(parcel, self._requested_codes.get(barcode, barcode))
+            self._apply_contents(parcel, code)
         self.async_update_listeners()
 
     @property
@@ -372,9 +373,7 @@ class ExpressOneCoordinator(DataUpdateCoordinator[list[dict]]):
             )
             for code, raw in raws_by_code.items()
         ]
-        self._requested_codes = {
-            parcel["barcode"]: code for code, parcel in entries if parcel.get("barcode")
-        }
+        self._parcel_codes = {id(parcel): code for code, parcel in entries}
         active = [parcel for _, parcel in entries if not parcel["delivered"]]
         delivered = [parcel for _, parcel in entries if parcel["delivered"]]
         # Rebuilt fresh from this cycle's data — a code whose payload just
